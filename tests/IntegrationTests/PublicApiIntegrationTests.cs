@@ -8,12 +8,12 @@ using NUnit.Framework;
 
 namespace TechnicalTest.Tests.IntegrationTests;
 
-[TestFixture]
-[Category("Integration")]
 /// <summary>
 /// Exercises the typed API client and application processing pipeline against live JSONPlaceholder;
 /// the API-category fixture separately verifies the service's raw HTTP contract.
 /// </summary>
+[TestFixture]
+[Category("Integration")]
 public class PublicApiIntegrationTests
 {
     private HttpClient _httpClient = null!;
