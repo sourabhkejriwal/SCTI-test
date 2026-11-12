@@ -1,0 +1,58 @@
+name: UI Tests (Multi-Environment)
+
+# Manual run: choose one environment, or All to run Dev, QA and Prod in parallel.
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Environment to test
+        type: choice
+        options: [All, Dev, QA, Prod]
+        default: All
+
+jobs:
+  ui:
+    name: UI - ${{ matrix.environment }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        # Names are case-sensitive: each must match an appsettings.{name}.json file.
+        environment: ${{ fromJSON(inputs.environment == 'All' && '["Dev","QA","Prod"]' || format('["{0}"]', inputs.environment)) }}
+    env:
+      TEST_ENV: ${{ matrix.environment }}
+
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Build
+        run: dotnet build TechnicalTest.sln
+
+      # appsettings.json uses BrowserChannel "chrome", so install Google Chrome rather than the bundled Chromium.
+      - name: Install browser
+        run: pwsh tests/bin/Debug/net8.0/playwright.ps1 install --with-deps chrome
+
+      - name: Run UI tests on ${{ matrix.environment }}
+        run: >
+          dotnet test TechnicalTest.sln --no-build
+          --filter "Category=UI"
+          --logger "trx;LogFileName=ui-${{ matrix.environment }}.trx"
+          --results-directory TestResults
+
+      # Runs even when tests fail: the TRX report, plus the Playwright trace and screenshot of any failed scenario.
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ui-results-${{ matrix.environment }}
+          path: |
+            TestResults/
+            tests/bin/Debug/net8.0/playwright-artifacts/
+          if-no-files-found: ignore

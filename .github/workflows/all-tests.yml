@@ -1,0 +1,56 @@
+name: All Tests
+
+# Every test category runs as its own parallel job on each push to main and on every pull request.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: ${{ matrix.category }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        category: [Unit, Mock, Component, Validation, API, Integration, UI]
+
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Build
+        run: dotnet build TechnicalTest.sln
+
+      # appsettings.json uses BrowserChannel "chrome", so install Google Chrome rather than the bundled Chromium.
+      - name: Install browser
+        if: matrix.category == 'UI'
+        run: pwsh tests/bin/Debug/net8.0/playwright.ps1 install --with-deps chrome
+
+      - name: Run ${{ matrix.category }} tests
+        run: >
+          dotnet test TechnicalTest.sln --no-build
+          --filter "Category=${{ matrix.category }}"
+          --logger "trx;LogFileName=${{ matrix.category }}.trx"
+          --results-directory TestResults
+
+      # Runs even when tests fail: the TRX report, plus the Playwright trace and screenshot of any failed UI scenario.
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: results-${{ matrix.category }}
+          path: |
+            TestResults/
+            tests/bin/Debug/net8.0/playwright-artifacts/
+          if-no-files-found: ignore
