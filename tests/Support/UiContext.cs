@@ -1,4 +1,5 @@
 using Microsoft.Playwright;
+using TechnicalTest.Configuration;
 using TechnicalTest.Ui.Helpers;
 using TechnicalTest.Ui.Pages.Models;
 using TechnicalTest.Ui.Pages;
@@ -15,7 +16,7 @@ public sealed class UiContext
     private PlanOptionsPage? _planOptionsPage;
     private TravellerDetailsPage? _travellerDetailsPage;
 
-    public TestSettings Settings { get; } = ConfigurationHelper.Settings;
+    public TestSettings Settings { get; } = TestSettings.Load(ConfigurationHelper.Configuration);
 
     public IPlaywright? Playwright { get; set; }
     public IBrowser? Browser { get; set; }

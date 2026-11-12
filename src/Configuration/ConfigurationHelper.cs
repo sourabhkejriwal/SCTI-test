@@ -1,21 +1,18 @@
 using Microsoft.Extensions.Configuration;
 
-namespace TechnicalTest.Ui.Helpers;
+namespace TechnicalTest.Configuration;
 
 /// <summary>
 /// Loads appsettings.json, then appsettings.{TEST_ENV}.json, then TEST_-prefixed environment variables
-/// (e.g. <c>TEST_Headless=false</c> or <c>TEST_Artifacts__TraceOnFailure=false</c>), later sources winning.
+/// (e.g. <c>TEST_Headless=false</c> or <c>TEST_ApiBaseUrl=https://example.test</c>), later sources winning.
 /// A TEST_ENV with no matching file (exact case) fails the run instead of silently using the defaults.
-/// Thread-safe so parallel scenarios share one immutable configuration.
+/// Thread-safe so all test layers share one immutable configuration.
 /// </summary>
 public static class ConfigurationHelper
 {
     private static readonly Lazy<IConfiguration> LazyConfiguration = new(Build);
-    private static readonly Lazy<TestSettings> LazySettings = new(() => TestSettings.Load(LazyConfiguration.Value));
 
     public static IConfiguration Configuration => LazyConfiguration.Value;
-
-    public static TestSettings Settings => LazySettings.Value;
 
     private static IConfiguration Build()
     {

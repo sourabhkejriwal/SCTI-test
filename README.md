@@ -16,7 +16,11 @@ This is a comprehensive test automation framework demonstrating expertise across
 ```
 TechnicalTest/
 ├── src/
+│   ├── Configuration/
+│   │   └── ConfigurationHelper.cs
 │   ├── Api/
+│   │   ├── Configuration/
+│   │   │   └── PublicApiSettings.cs
 │   │   ├── Clients/
 │   │   │   ├── IPublicApiClient.cs
 │   │   │   └── PublicApiClient.cs
@@ -31,7 +35,8 @@ TechnicalTest/
 │       │   ├── BasePage.cs
 │       │   └── InsurancePage.cs
 │       └── Helpers/
-│           └── ConfigurationHelper.cs
+│           ├── NetworkRecorder.cs
+│           └── TestSettings.cs
 │
 ├── tests/
 │   ├── Features/
@@ -41,7 +46,9 @@ TechnicalTest/
 │   ├── UnitTests/
 │   │   └── PostValidatorTests.cs
 │   ├── ApiTests/
-│   │   └── PublicApiClientTests.cs
+│   │   ├── PublicApiClientOfflineTests.cs
+│   │   ├── PublicApiContractTests.cs
+│   │   └── PublicApiSettingsTests.cs
 │   ├── MockTests/
 │   │   └── PostProcessorMockTests.cs
 │   ├── ComponentTests/
@@ -63,7 +70,7 @@ TechnicalTest/
 ### Prerequisites
 - .NET 8.0 SDK
 - PowerShell (for Playwright installation)
-- Internet connection (for API integration tests)
+- Internet connection (for live API contract tests)
 
 ### Installation
 
@@ -106,6 +113,7 @@ dotnet test --filter "Category=Unit"
 ```bash
 dotnet test --filter "Category=API"
 ```
+This category contains offline HTTP-handler tests and live JSONPlaceholder contract tests, so the full category requires internet access.
 
 **Mock Tests**
 ```bash
@@ -258,6 +266,11 @@ dotnet test --filter "Category=UI"
 - `BasePage`: Abstract base with common functionality
 - `InsurancePage`: Specific page implementation with locators and actions
 - Separation of page structure from test logic
+
+### Network Capture (UI)
+- `NetworkRecorder` logs every response for the browser context (method, URL, status).
+- The site's own API calls (`{BaseUrl}/api/**`) are also recorded with request and response bodies, so steps can assert on them.
+- Trade-off: those bodies are captured through a Playwright route, because a response body can no longer be read once the page navigates (as it does straight after "Get a quote"). A routed call is sent by Playwright on the page's behalf and the result is handed back to the page, so it does not go through the browser's own network stack. A call that fails is reported to the page as failed and is never re-sent.
 
 ### Dependency Injection -API
 - Interface-based design (IPublicApiClient)
