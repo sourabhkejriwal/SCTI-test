@@ -15,9 +15,19 @@ This is a comprehensive test automation framework demonstrating expertise across
 
 ```
 TechnicalTest/
+├── .github/
+│   └── workflows/
+│       ├── all-tests.yml
+│       └── ui-tests.yml
+├── performance/
+│   ├── k6/
+│   │   ├── journeys.json
+│   │   ├── quote-journey.js
+│   │   └── workload.json
+│   ├── kubernetes/
+│   │   └── k6-testrun.yaml
+│   └── README.md
 ├── src/
-│   ├── Configuration/
-│   │   └── ConfigurationHelper.cs
 │   ├── Api/
 │   │   ├── Configuration/
 │   │   │   └── PublicApiSettings.cs
@@ -30,39 +40,55 @@ TechnicalTest/
 │   │   │   └── PostProcessor.cs
 │   │   └── Validators/
 │   │       └── PostValidator.cs
-│   └── Ui/
-│       ├── Pages/
-│       │   ├── BasePage.cs
-│       │   └── InsurancePage.cs
-│       └── Helpers/
-│           ├── NetworkRecorder.cs
-│           └── TestSettings.cs
+│   ├── Configuration/
+│   │   └── ConfigurationHelper.cs
+│   ├── Ui/
+│   │   ├── Helpers/
+│   │   │   ├── NetworkRecorder.cs
+│   │   │   └── TestSettings.cs
+│   │   └── Pages/
+│   │       ├── Models/
+│   │       │   ├── Quote.cs
+│   │       │   └── Travellers.cs
+│   │       ├── BasePage.cs
+│   │       ├── InsurancePage.cs
+│   │       ├── PlanOptionsPage.cs
+│   │       └── TravellerDetailsPage.cs
+│   └── TechnicalTest.csproj
 │
 ├── tests/
-│   ├── Features/
-│   │   └── InsuranceBooking.feature
-│   ├── StepDefinitions/
-│   │   └── InsuranceBookingSteps.cs
-│   ├── UnitTests/
-│   │   └── PostValidatorTests.cs
 │   ├── ApiTests/
 │   │   ├── PublicApiClientOfflineTests.cs
 │   │   ├── PublicApiContractTests.cs
 │   │   └── PublicApiSettingsTests.cs
-│   ├── MockTests/
-│   │   └── PostProcessorMockTests.cs
 │   ├── ComponentTests/
 │   │   └── PostProcessorComponentTests.cs
+│   ├── Features/
+│   │   ├── InsuranceBooking.feature
+│   │   └── InsuranceBooking.feature.cs
+│   ├── Hooks/
+│   │   └── PlaywrightHooks.cs
 │   ├── IntegrationTests/
 │   │   └── PublicApiIntegrationTests.cs
+│   ├── MockTests/
+│   │   └── PostProcessorMockTests.cs
+│   ├── StepDefinitions/
+│   │   └── InsuranceBookingSteps.cs
+│   ├── Support/
+│   │   ├── JsonPlaceholderTestData.cs
+│   │   └── UiContext.cs
+│   ├── UnitTests/
+│   │   └── PostValidatorTests.cs
 │   ├── ValidationTests/
 │   │   └── PostValidationTests.cs
-│   └── appsettings.{Environment}.json
-│
-└── .github/
-    └── workflows/
-        ├── ui-tests.yml
-        └── all-tests.yml
+│   ├── appsettings.json
+│   ├── appsettings.{Dev,QA,Prod}.json
+│   ├── AssemblyInfo.cs
+│   ├── reqnroll.json
+│   ├── TechnicalTest.Tests.csproj
+│   └── test.runsettings
+├── TechnicalTest.sln
+└── README.md
 ```
 
 ##  Getting Started
