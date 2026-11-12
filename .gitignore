@@ -71,6 +71,10 @@ secrets.json
 *.swp
 *~
 
+# Generated k6 performance-test output
+performance/results/
+performance/**/*.tar
+
 # Operating-system metadata
 .DS_Store
 ._*

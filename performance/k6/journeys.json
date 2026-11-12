@@ -1,0 +1,160 @@
+[
+  {
+    "name": "Australia and Fiji family",
+    "productCode": "ST",
+    "baseCountry": "NZL",
+    "destinations": [
+      "AUS",
+      "FJI"
+    ],
+    "adultsAge": [
+      40
+    ],
+    "dependentChildAges": [
+      10
+    ],
+    "nonDependentChildAges": [
+      12
+    ],
+    "childAges": [],
+    "departInDays": 30,
+    "tripDays": 14,
+    "customisation": {
+      "schsDiscount": false,
+      "excess": "100",
+      "cancellationCover": "5000",
+      "extraCover": "Cruise"
+    }
+  },
+  {
+    "name": "Australia family alternate ages",
+    "productCode": "ST",
+    "baseCountry": "NZL",
+    "destinations": [
+      "AUS"
+    ],
+    "adultsAge": [
+      35
+    ],
+    "dependentChildAges": [
+      8
+    ],
+    "nonDependentChildAges": [
+      15
+    ],
+    "childAges": [],
+    "departInDays": 45,
+    "tripDays": 10,
+    "customisation": {
+      "schsDiscount": false,
+      "excess": "100",
+      "cancellationCover": "5000",
+      "extraCover": "Cruise"
+    }
+  },
+  {
+    "name": "Fiji family short trip",
+    "productCode": "ST",
+    "baseCountry": "NZL",
+    "destinations": [
+      "FJI"
+    ],
+    "adultsAge": [
+      30
+    ],
+    "dependentChildAges": [
+      15
+    ],
+    "nonDependentChildAges": [
+      16
+    ],
+    "childAges": [],
+    "departInDays": 21,
+    "tripDays": 7,
+    "customisation": {
+      "schsDiscount": false,
+      "excess": "100",
+      "cancellationCover": "10000",
+      "extraCover": "Ski"
+    }
+  },
+  {
+    "name": "Australia and Fiji long trip",
+    "productCode": "ST",
+    "baseCountry": "NZL",
+    "destinations": [
+      "AUS",
+      "FJI"
+    ],
+    "adultsAge": [
+      45
+    ],
+    "dependentChildAges": [
+      6
+    ],
+    "nonDependentChildAges": [
+      14
+    ],
+    "childAges": [],
+    "departInDays": 60,
+    "tripDays": 21,
+    "customisation": {
+      "schsDiscount": false,
+      "excess": "100",
+      "cancellationCover": "2500",
+      "extraCover": "Cruise"
+    }
+  },
+  {
+    "name": "Fiji family default cover",
+    "productCode": "ST",
+    "baseCountry": "NZL",
+    "destinations": [
+      "FJI"
+    ],
+    "adultsAge": [
+      38
+    ],
+    "dependentChildAges": [
+      9
+    ],
+    "nonDependentChildAges": [
+      13
+    ],
+    "childAges": [],
+    "departInDays": 14,
+    "tripDays": 10,
+    "customisation": {
+      "schsDiscount": false,
+      "excess": "200",
+      "cancellationCover": "5000",
+      "extraCover": "Cruise"
+    }
+  },
+  {
+    "name": "Australia family last minute",
+    "productCode": "ST",
+    "baseCountry": "NZL",
+    "destinations": [
+      "AUS"
+    ],
+    "adultsAge": [
+      52
+    ],
+    "dependentChildAges": [
+      11
+    ],
+    "nonDependentChildAges": [
+      16
+    ],
+    "childAges": [],
+    "departInDays": 7,
+    "tripDays": 5,
+    "customisation": {
+      "schsDiscount": false,
+      "excess": "200",
+      "cancellationCover": "10000",
+      "extraCover": "Ski"
+    }
+  }
+]

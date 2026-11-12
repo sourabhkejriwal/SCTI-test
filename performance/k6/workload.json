@@ -1,0 +1,140 @@
+{
+  "description": "Illustrative quote-journey workload. Rates, journey percentages and thresholds are assumptions; replace them with approved production analytics and agreed service-level objectives before capacity testing.",
+  "safety": {
+    "allowedHosts": []
+  },
+  "journeyMix": {
+    "quoteOnlyPercent": 50,
+    "customisePercent": 30,
+    "travellerDetailsPercent": 12,
+    "submitTravellersPercent": 8
+  },
+  "thinkTimeSeconds": {
+    "afterQuote": {
+      "min": 2,
+      "max": 8
+    },
+    "betweenCustomisations": {
+      "min": 1,
+      "max": 3
+    },
+    "beforeTravellerDetails": {
+      "min": 2,
+      "max": 8
+    },
+    "fillTravellerForm": {
+      "min": 30,
+      "max": 90
+    }
+  },
+  "thresholds": {
+    "errorRate": 0.01,
+    "abortErrorRate": 0.1,
+    "abortAfter": "30s",
+    "checksRate": 0.99,
+    "p95Milliseconds": {
+      "getConfig": 1000,
+      "createQuote": 4000,
+      "updateExtras": 3000,
+      "selectQuote": 3000,
+      "updateTravellers": 3000,
+      "confirmEligibility": 2500
+    },
+    "p99Milliseconds": 6000
+  },
+  "syntheticTraveller": {
+    "title": "Mr",
+    "firstName": "Perf",
+    "lastNamePrefix": "Test",
+    "emailDomain": "example.com",
+    "phone": "0211234567",
+    "address": "1 Queen Street",
+    "suburb": "Auckland CBD",
+    "city": "Auckland",
+    "state": "",
+    "country": "NZL",
+    "postcode": "1010"
+  },
+  "profiles": {
+    "smoke": {
+      "executor": "shared-iterations",
+      "vus": 1,
+      "iterations": 1,
+      "maxDuration": "1m"
+    },
+    "baseline": {
+      "executor": "constant-arrival-rate",
+      "rate": 1,
+      "timeUnit": "1s",
+      "duration": "10m",
+      "preAllocatedVUs": 30,
+      "maxVUs": 100
+    },
+    "load": {
+      "executor": "ramping-arrival-rate",
+      "startRate": 1,
+      "timeUnit": "1s",
+      "preAllocatedVUs": 150,
+      "maxVUs": 400,
+      "stages": [
+        {
+          "duration": "5m",
+          "target": 5
+        },
+        {
+          "duration": "30m",
+          "target": 5
+        },
+        {
+          "duration": "5m",
+          "target": 0
+        }
+      ]
+    },
+    "stress": {
+      "executor": "ramping-arrival-rate",
+      "startRate": 1,
+      "timeUnit": "1s",
+      "preAllocatedVUs": 400,
+      "maxVUs": 1000,
+      "stages": [
+        {
+          "duration": "5m",
+          "target": 5
+        },
+        {
+          "duration": "10m",
+          "target": 5
+        },
+        {
+          "duration": "5m",
+          "target": 10
+        },
+        {
+          "duration": "10m",
+          "target": 10
+        },
+        {
+          "duration": "5m",
+          "target": 15
+        },
+        {
+          "duration": "10m",
+          "target": 15
+        },
+        {
+          "duration": "3m",
+          "target": 1
+        },
+        {
+          "duration": "10m",
+          "target": 1
+        },
+        {
+          "duration": "2m",
+          "target": 0
+        }
+      ]
+    }
+  }
+}

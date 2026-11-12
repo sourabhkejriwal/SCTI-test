@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: scti-k6-env
+data:
+  # Replace this deliberately; .invalid can never resolve on the public internet.
+  BASE_URL: "https://performance.example.invalid"
+  PROFILE: "load"
+  # Keep false until the environment owner approves the target, rate and test window.
+  PERF_TEST_APPROVED: "false"
+  TEST_RUN_ID: "replace-with-change-or-run-id"
+  # Central results. Each runner only sees its own share of the traffic, so the pass/fail verdict
+  # for a distributed run must come from these aggregated metrics, not from a single pod's summary.
+  K6_PROMETHEUS_RW_SERVER_URL: "http://prometheus.monitoring.svc:9090/api/v1/write"
+  K6_PROMETHEUS_RW_TREND_STATS: "p(95),p(99),avg,max"
+---
+apiVersion: k6.io/v1alpha1
+kind: TestRun
+metadata:
+  # One run per profile: rename to match PROFILE, e.g. scti-quote-baseline or scti-quote-stress.
+  name: scti-quote-load
+spec:
+  # k6 Operator divides the global workload into four equal execution segments:
+  # each runner generates one quarter of the arrival rate and holds one quarter of the VUs.
+  parallelism: 4
+  # One runner per node, so generators do not compete for CPU. Needs at least four schedulable nodes.
+  separate: true
+  script:
+    configMap:
+      name: scti-quote-wlm
+      file: quote-journey.js
+  arguments: "--tag execution=distributed --out experimental-prometheus-rw"
+  runner:
+    envFrom:
+      - configMapRef:
+          name: scti-k6-env
+    resources:
+      requests:
+        cpu: "500m"
+        memory: "512Mi"
+      limits:
+        cpu: "2"
+        memory: "2Gi"
