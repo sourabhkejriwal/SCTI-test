@@ -3,6 +3,7 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using TechnicalTest.Api.Configuration;
 using TechnicalTest.Configuration;
+using static TechnicalTest.Tests.Support.JsonPlaceholderTestData;
 using NUnit.Framework;
 
 namespace TechnicalTest.Tests.ApiTests;
@@ -11,12 +12,6 @@ namespace TechnicalTest.Tests.ApiTests;
 [Category("API")]
 public class PublicApiContractTests
 {
-    private const int ExpectedPostCount = 100;
-
-    // JSONPlaceholder has 100 stored posts. POST simulates creation with ID 101 but does not persist it,
-    // so the same ID remains the first missing resource for subsequent GET requests.
-    private const int FirstIdAfterStoredPosts = ExpectedPostCount + 1;
-
     private static readonly JsonSerializerOptions SerializerOptions = new(JsonSerializerDefaults.Web);
 
     private HttpClient _httpClient = null!;
