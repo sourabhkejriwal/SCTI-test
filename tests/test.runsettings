@@ -4,4 +4,11 @@
     <!-- Parallel workers for fixtures marked Parallelizable. Override with the NUnit.NumberOfTestWorkers argument. -->
     <NumberOfTestWorkers>4</NumberOfTestWorkers>
   </NUnit>
+  <!-- Every run writes a TRX and an HTML report to tests/TestResults. A logger passed with the logger argument (as the pipelines do) takes the place of the one with the same name here. -->
+  <LoggerRunSettings>
+    <Loggers>
+      <Logger friendlyName="trx" enabled="True" />
+      <Logger friendlyName="html" enabled="True" />
+    </Loggers>
+  </LoggerRunSettings>
 </RunSettings>
