@@ -1,38 +1,83 @@
-# Ignore build outputs
-bin/
-obj/
+# .NET build and publish output
+**/[Bb]in/
+**/[Oo]bj/
+[Aa]rtifacts/
+[Pp]ublish/
 *.dll
 *.exe
 *.pdb
+*.cache
 
-# Ignore test results
-TestResults/
+# Test results and coverage output
+[Tt]est[Rr]esults/
+coverage/
+coverage-*/
 *.trx
 *.coverage
+*.coveragexml
+*.coverlet.json
+*.opencover.xml
+*.cobertura.xml
 
-# Ignore user-specific files
+# Reqnroll/SpecFlow generated code
+*.feature.cs
+
+# Playwright runtime artifacts
+.playwright-cli/
+playwright-report/
+playwright/.cache/
+test-results/
+screenshots/
+videos/
+traces/
+*.webm
+*.zip
+
+# Node dependencies and tool caches
+node_modules/
+.npm/
+.npx/
+.yarn/
+.pnpm-store/
+
+# NuGet packages and generated packages
+packages/
+*.nupkg
+*.snupkg
+
+# IDE and editor state
+.vs/
+.vscode/
+.idea/
 *.user
 *.suo
 *.userosscache
 *.sln.docstates
+*.DotSettings.user
 
-# Ignore Playwright artifacts
-playwright/
-screenshots/
-videos/
+# Local configuration, secrets, and environment overrides
+.env
+.env.*
+!.env.example
+appsettings.Local.json
+appsettings.*.local.json
+secrets.json
 
-# Ignore IDE files
-.vs/
-.vscode/
-.idea/
-
-# Ignore NuGet packages
-*.nupkg
-packages/
-
-# Ignore logs
+# Logs and temporary files
 *.log
+*.tmp
+*.temp
+*.bak
+*.swp
+*~
 
-# Ignore OS files
+# Operating-system metadata
 .DS_Store
+._*
 Thumbs.db
+Desktop.ini
+
+.agents
+package-lock.json
+package.json
+skills-lock.json

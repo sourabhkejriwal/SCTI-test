@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <NUnit>
+    <!-- Parallel workers for fixtures marked Parallelizable. Override with the NUnit.NumberOfTestWorkers argument. -->
+    <NumberOfTestWorkers>4</NumberOfTestWorkers>
+  </NUnit>
+</RunSettings>
